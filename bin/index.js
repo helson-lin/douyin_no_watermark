@@ -1,5 +1,5 @@
 const fetch = require('node-fetch')
-const { sign } = require('./X-Bogus')
+const { sign } = require('./X-Bogus.js')
 const fs = require('fs');
 
 class Scraper {
