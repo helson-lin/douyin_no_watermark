@@ -31,7 +31,9 @@ class Scraper {
         return new Promise((resolve, reject) => {
             fetch(url, headers).then((res) => {
                 if (!res?.url) reject(new Error('can\'t get room id'))
-                const roomId = res?.url?.match(/video\/(\d+)/)[1];
+                const idMatched = res?.url?.match(/video\/(\d+)/)
+                console.log(idMatched)
+                const roomId = idMatched ? idMatched[1] : null;
                 if (!roomId) reject(new Error('can\'t get room id'))
                 resolve(roomId)
             })
