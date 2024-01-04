@@ -212,7 +212,7 @@ class Scraper {
                 awemeLen = aweme_list.length
                 result = result.concat(aweme_list)
                 // 间隔一定随机时间防止被ban 
-                await new Promise(resolve => setTimeout(resolve, Math.random() * 1000));
+                await new Promise(resolve => setTimeout(resolve, Math.random() * 100));
             } while (awemeLen > 0)
             const authorName = getDeepProperty(result, '0.author.nickname')
             // download to local media dir
