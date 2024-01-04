@@ -2,3 +2,4 @@ node_modules
 .vscode
 media
 test.js
+dist/**

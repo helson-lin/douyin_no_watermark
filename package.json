@@ -2,11 +2,27 @@
   "name": "oimi-tk",
   "version": "1.0.0",
   "description": "douyin no water video parser",
-  "bin": "bin/index.js",
+  "bin": "src/index.js",
   "main": "bin/index.js",
   "scripts": {
     "dev": "node ./src/index.js",
+    "pkg": "pkg ./ --debug=true",
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "pkg": {
+    "scripts": [
+      "./src/index.js",
+      "./bin/*.js"
+    ],
+    "assets": [
+      "./runtime/**/*.js",
+      "./runtime/**/**/*.js"
+    ],
+    "targets": [
+      "node14-macos-arm64",
+      "node14-macos-x64"
+    ],
+    "outputPath": "dist"
   },
   "keywords": [],
   "author": "helson",
@@ -16,5 +32,8 @@
     "download": "^8.0.0",
     "express": "^4.18.2",
     "node-fetch": "2"
+  },
+  "devDependencies": {
+    "pkg": "^5.8.1"
   }
 }
