@@ -221,7 +221,7 @@ class Scraper {
             const viodes = result.map(i => this.getVideoUrl(i.aweme_id, i.desc, authorName))
             Promise.allSettled(viodes).then((results) => {
                 // const isHasFailed = results.filter(res => res.status === 'rejected')
-                console.log(isHasFailed.map(i => i.value))
+                // console.log(isHasFailed.map(i => i.value))
                 const data = results.filter(res => res.status === 'fulfilled').map(i => i.value)
                 resolve(data)
             })

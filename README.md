@@ -10,3 +10,6 @@ click the deploy button to deploy yours self server
 
 本项目思路参考： [Doouyin_TikTOk_Download_API](https://github.com/Evil0ctal/Douyin_TikTok_Download_API), `X-Bogus.js`源自该项目
 
+
+捷径地址: [iCloud](https://www.icloud.com/shortcuts/f19925da427c41a5bad09f2bc169fedd)
+
