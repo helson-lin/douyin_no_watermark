@@ -8,7 +8,8 @@ const scraper = new Scraper()
 const test = async (url) => { 
     const sec_user_id = await scraper.getUserSecUidByShareUrl(url)
     console.log('sec_user_id:' + sec_user_id)
-    await scraper.batchDownload(sec_user_id)
+    const result = await scraper.batcgetHomeVideoshDownload(sec_user_id)
+    console.log(result)
 }
 
 // test('7- 长按复制此条消息，打开抖音搜索，查看TA的更多作品。 https://v.douyin.com/ieApRo4r/')

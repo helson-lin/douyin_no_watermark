@@ -149,42 +149,76 @@ class Scraper {
         await download(url, dirname ? `media/${dirname}` : 'media', { filename: `${videoName}.mp4` })
     }
 
+
+    
     /**
-     * @description batch download media to local
-     * @param {string} sec_user_id 用户id
+     * @description Replaces all special characters in the string (including Spaces)/替换字符串中的所有特殊字符（包含空格）
+     * @date 2024/1/4 - 19:45:52
+     * @param {*} string
+     * @returns {*}
      */
-    async batchDownload(sec_user_id) {
-        let result = []
-        let maxCursor = 0
-        let awemeLen = 1;
-        do {
-            let apiUrl = `https://www.douyin.com/aweme/v1/web/aweme/post/?sec_user_id=${sec_user_id}&count=35&max_cursor=${maxCursor}&aid=1128&version_name=23.5.0&device_platform=android&os_version=2333`;
-            const urlParser = new URL(apiUrl)
-            const query = urlParser.search.replace('?', '')
-            const xbogus = sign(query, this.headers['User-Agent'])
-            const new_url = apiUrl + "&X-Bogus=" + xbogus
-            const headers = JSON.parse(JSON.stringify(this.douyinApiHeaders))
-            // headers.cookie += 'sessionid=69b218330b62e948d2f62a8f1a8e698c'
-            const res = await fetch(new_url, { headers })
-            // console.log(new_url)
-            const data = await res.json()
-            const { aweme_list, max_cursor } = data
-            if (max_cursor) maxCursor = max_cursor
-            awemeLen = aweme_list.length
-            result = result.concat(aweme_list)
-            // 间隔一定随机时间防止被ban 
-            await new Promise(resolve => setTimeout(resolve, Math.random() * 1000));
-        } while (awemeLen > 0)
-        const authorName = getDeepProperty(result, '0.author.nickname')
-        const videoIds = result.map(i => this.downloadVideo(i.aweme_id, i.desc, authorName))
-        Promise.allSettled(videoIds).then((results) => {
-            const isHasFailed = results.filter(res => res.status === 'rejected')
-            if (isHasFailed.length > 0) {
-                const errorMsg = isHasFailed.map(i => i.reason).join(",")
-                console.log('download failed:' + errorMsg)
-            } else {
-                console.log("all mission execed")
-            }
+    trimSpecial(string) {
+        if (string != "") {
+            const pattern = /[`~!@ᓚᘏᗢ‧˚₊♡$^\-&*()=|{}':;',\\\[\]\.<>\/?~！@ᓚᘏᗢ‧˚₊♡￥……&*（）——|{}【】'；：""'。，、？\s]/g;
+            string = string.replace(pattern, "");
+        }
+        return string
+    }
+    /**
+     * @description get video url by videoData
+     * @date 2024/1/4 - 19:24:04
+     * @async
+     * @param {string} videoId
+     * @returns {string} videoUrl
+     */
+    async getVideoUrl(videoId, videoName, authorName) {
+        const videoData = await this.getDouyinVideoData(videoId)
+        let url = await this.getDouyinNoWatermarkVideo(videoData);
+        let name = `${authorName}-${videoName}`
+        name = this.trimSpecial(name)
+        return {
+            url,
+            name,
+        }
+    }
+
+    /**
+     * @description get author all videos
+     * @param {string} sec_user_id 
+     */
+    async getHomeVideos(sec_user_id) {
+        return new Promise(async (resolve, reject) => {
+            let result = []
+            let maxCursor = 0
+            let awemeLen = 1;
+            do {
+                let apiUrl = `https://www.douyin.com/aweme/v1/web/aweme/post/?sec_user_id=${sec_user_id}&count=35&max_cursor=${maxCursor}&aid=1128&version_name=23.5.0&device_platform=android&os_version=2333`;
+                const urlParser = new URL(apiUrl)
+                const query = urlParser.search.replace('?', '')
+                const xbogus = sign(query, this.headers['User-Agent'])
+                const new_url = apiUrl + "&X-Bogus=" + xbogus
+                const headers = JSON.parse(JSON.stringify(this.douyinApiHeaders))
+                // headers.cookie += 'sessionid=69b218330b62e948d2f62a8f1a8e698c'
+                const res = await fetch(new_url, { headers })
+                // console.log(new_url)
+                const data = await res.json()
+                const { aweme_list, max_cursor } = data
+                if (max_cursor) maxCursor = max_cursor
+                awemeLen = aweme_list.length
+                result = result.concat(aweme_list)
+                // 间隔一定随机时间防止被ban 
+                await new Promise(resolve => setTimeout(resolve, Math.random() * 1000));
+            } while (awemeLen > 0)
+            const authorName = getDeepProperty(result, '0.author.nickname')
+            // download to local media dir
+            // const videoIds = result.map(i => this.getVideoUrl(i.aweme_id, i.desc, authorName))
+            // get download info
+            const viodes = result.map(i => this.getVideoUrl(i.aweme_id, i.desc, authorName))
+            Promise.allSettled(viodes).then((results) => {
+                // const isHasFailed = results.filter(res => res.status === 'rejected')
+                const data = results.filter(res => res.status === 'fulfilled').map(i => i.value)
+                resolve(data)
+            })
         })
     }
 
@@ -192,7 +226,7 @@ class Scraper {
      * @description 获取今天的视频
      * @param {string} sec_user_id 用户id
      */
-    async getTodayVideo (sec_user_id) {}
+    async getTodayVideo(sec_user_id) { }
 }
 
 module.exports = Scraper;

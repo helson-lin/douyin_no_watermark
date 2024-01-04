@@ -24,6 +24,26 @@ app.post('/douyin', async (req, res) => {
     }
 })
 
+app.post('/workflow', async (req, res) => {
+    const url = req.body.url;
+    try {
+        const isHomeUrl = url.indexOf('查看TA的更多作品') !== -1
+        if (!isHomeUrl) {
+            const douyinId = await scraper.getDouyinVideoId(url);
+            const douyinData = await scraper.getDouyinVideoData(douyinId);
+            const douyinUrl = await scraper.getDouyinNoWatermarkVideo(douyinData);
+            res.send({code: 0, data: [douyinUrl] })
+        } else {
+            const sec_user_id = await scraper.getUserSecUidByShareUrl(url)
+            const result = await scraper.getHomeVideos(sec_user_id)
+            const urls = result.map(i => i.url)
+            res.send({code: 0, data: urls })
+        }
+    } catch (e) {
+        res.send({code: 1, msg: String(e), data: null })
+    }
+})
+
 app.listen(PORT, () => {
     console.log(`server is running on: ${PORT}`);
 })
