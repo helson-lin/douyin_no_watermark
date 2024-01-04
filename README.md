@@ -1,5 +1,7 @@
 ## oimi-tk
 
+2024/1/4: 更新通过用户主页分享链接，批量下载作品
+
 点击下面按钮一键部署到vercel
 
 click the deploy button to deploy yours self server

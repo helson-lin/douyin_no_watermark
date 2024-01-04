@@ -150,7 +150,7 @@ class Scraper {
     }
 
 
-    
+
     /**
      * @description Replaces all special characters in the string (including Spaces)/替换字符串中的所有特殊字符（包含空格）
      * @date 2024/1/4 - 19:45:52
@@ -176,10 +176,15 @@ class Scraper {
         let url = await this.getDouyinNoWatermarkVideo(videoData);
         let name = `${authorName}-${videoName}`
         name = this.trimSpecial(name)
-        return {
-            url,
-            name,
-        }
+        return new Promise((resolve, reject) => {
+            // 下面判断规则是通过视频地址总结的
+            // The following rules are summarized by video address
+            if (url.indexOf('.mp3') !== -1 || url.indexOf('mime_type=video_mp4') === -1) {
+                reject("The user's work is not a video.")
+            } else {
+                resolve({ url, name })
+            }
+        })
     }
 
     /**
@@ -216,6 +221,7 @@ class Scraper {
             const viodes = result.map(i => this.getVideoUrl(i.aweme_id, i.desc, authorName))
             Promise.allSettled(viodes).then((results) => {
                 // const isHasFailed = results.filter(res => res.status === 'rejected')
+                console.log(isHasFailed.map(i => i.value))
                 const data = results.filter(res => res.status === 'fulfilled').map(i => i.value)
                 resolve(data)
             })
