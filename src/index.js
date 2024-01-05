@@ -1,11 +1,13 @@
 
 const Scraper = require('..')
 const express = require('express')
+require('dotenv').config();
 const app = express()
+
 app.use(express.json()); // 用于解析 JSON 格式的请求体
 app.use(express.urlencoded({ extended: true }));
 const scraper = new Scraper()
-const PORT = process.env.PORT || 3000;
+let PORT = process.env.PORT || 3000;
 
 app.get('/', (req, res) => {
     res.send(`<h1>server is running on: ${PORT}</h1>`)
@@ -44,6 +46,20 @@ app.post('/workflow', async (req, res) => {
     }
 })
 
+const getArgsPort = () => {
+    const args = process.argv.slice(2);
+    const portArg = args.find(i => i.toLocaleUpperCase().indexOf('PORT') !== -1);
+    if (portArg) {
+        const port = portArg.split('=').pop()
+        if (isNaN(Number(port))) return PORT
+        return Number(port)
+    } else {
+        return PORT
+    }
+}
+
+
+PORT = getArgsPort()
 app.listen(PORT, () => {
     console.log(`server is running on: ${PORT}`);
 })
