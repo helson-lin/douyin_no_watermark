@@ -61,3 +61,4 @@ jobs:
         with:
           context: ./
           push: true
+          tags: h55205l/douyin_no_watermark:latest
