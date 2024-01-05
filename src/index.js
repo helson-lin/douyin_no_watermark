@@ -36,7 +36,7 @@ app.post('/workflow', async (req, res) => {
         } else {
             const sec_user_id = await scraper.getUserSecUidByShareUrl(url)
             const result = await scraper.getHomeVideos(sec_user_id)
-            const urls = result.map(i => i.url)
+            const urls = result.map(i => i.url).flat(Infinity)
             res.send({code: 0, data: urls })
         }
     } catch (e) {

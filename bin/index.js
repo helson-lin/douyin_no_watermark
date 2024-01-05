@@ -112,9 +112,21 @@ class Scraper {
      * @returns {string}
      */
     async getDouyinNoWatermarkVideo(videoData) {
-        let url = videoData.aweme_detail.video.play_addr.url_list[0];
-        let key = videoData.aweme_detail.video.play_addr.uri.replace('video/', '');
-        let noWatermarkUrl = url.replace('/play/', '/playwm/') + '?video_id=' + key;
+        let noWatermarkUrl;
+        const isFyp = videoData.aweme_detail.media_type === 2
+        if (!isFyp) {
+            let url = videoData.aweme_detail.video.play_addr.url_list[0];
+            let key = videoData.aweme_detail.video.play_addr.uri.replace('video/', '');
+            noWatermarkUrl = url.replace('/play/', '/playwm/') + '?video_id=' + key;
+        } else {
+            // 图片分享
+            let images = videoData?.aweme_detail?.images
+            noWatermarkUrl = images.map(i => {
+                if (!i?.url_list) return null
+                const maxSizePicIndex = i?.url_list.length - 1
+                return i?.url_list[maxSizePicIndex]
+            }).filter(i => i)
+        }
         return noWatermarkUrl;
     }
 
@@ -176,15 +188,7 @@ class Scraper {
         let url = await this.getDouyinNoWatermarkVideo(videoData);
         let name = `${authorName}-${videoName}`
         name = this.trimSpecial(name)
-        return new Promise((resolve, reject) => {
-            // 下面判断规则是通过视频地址总结的
-            // The following rules are summarized by video address
-            if (url.indexOf('.mp3') !== -1 || url.indexOf('mime_type=video_mp4') === -1) {
-                reject("The user's work is not a video.")
-            } else {
-                resolve({ url, name })
-            }
-        })
+        return { url, name }
     }
 
     /**
@@ -197,6 +201,7 @@ class Scraper {
             let maxCursor = 0
             let awemeLen = 1;
             do {
+               try {
                 let apiUrl = `https://www.douyin.com/aweme/v1/web/aweme/post/?sec_user_id=${sec_user_id}&count=35&max_cursor=${maxCursor}&aid=1128&version_name=23.5.0&device_platform=android&os_version=2333`;
                 const urlParser = new URL(apiUrl)
                 const query = urlParser.search.replace('?', '')
@@ -205,7 +210,6 @@ class Scraper {
                 const headers = JSON.parse(JSON.stringify(this.douyinApiHeaders))
                 // headers.cookie += 'sessionid=69b218330b62e948d2f62a8f1a8e698c'
                 const res = await fetch(new_url, { headers })
-                // console.log(new_url)
                 const data = await res.json()
                 const { aweme_list, max_cursor } = data
                 if (max_cursor) maxCursor = max_cursor
@@ -213,6 +217,7 @@ class Scraper {
                 result = result.concat(aweme_list)
                 // 间隔一定随机时间防止被ban 
                 await new Promise(resolve => setTimeout(resolve, Math.random() * 10));
+               } catch (e) {}
             } while (awemeLen > 0)
             const authorName = getDeepProperty(result, '0.author.nickname')
             // download to local media dir
