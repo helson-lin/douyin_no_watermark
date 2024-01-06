@@ -8,9 +8,9 @@
 
 ### 效果展示
 
-<div style="display: flex;width: 100%;justify-content: center; ">
-<video style="max-width: 750px;" src="https://file.helson-lin.cn/picgooimi_tk_docs.mp4" autoplay="true" muted="true"></video>
-</div>
+[![预览](https://file.helson-lin.cn/picgoSnipaste_2024-01-06_18-33-54.png)](https://file.helson-lin.cn/picgooimi_tk_docs.mp4)
+
+
 
 ### 部署
 
