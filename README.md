@@ -59,8 +59,11 @@ PORT = 11233
 
 
 
-捷径: [iCloud](https://www.icloud.com/shortcuts/f19925da427c41a5bad09f2bc169fedd)
+**捷径下载**: [iCloud](https://www.icloud.com/shortcuts/f42fea0e6fd14dcbae62921b8b758c7d)
 
+捷径内服务器，仅供测试使用。如果有大量使用需求，请自行部署。
+
+推荐使用个人服务器部署，`vercel`部署批量下载或出现超时（单个作品下载不会），请谨记(付费版本除外)。
 
 
 
