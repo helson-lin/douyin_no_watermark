@@ -6,6 +6,12 @@
 
 2024/1/5: ✨ 优化批量下载用户主页作品，支持图片作品下载。
 
+### 效果展示
+
+<div style="display: flex;width: 100%;justify-content: center; ">
+<video style="max-width: 750px;" src="https://file.helson-lin.cn/picgooimi_tk_docs.mp4" autoplay="true" muted="true"></video>
+</div>
+
 ### 部署
 
 #### Vercel部署
@@ -56,8 +62,9 @@ PORT = 11233
 捷径: [iCloud](https://www.icloud.com/shortcuts/f19925da427c41a5bad09f2bc169fedd)
 
 
+
+
 ### PS
 
 本项目思路参考： [Doouyin_TikTOk_Download_API](https://github.com/Evil0ctal/Douyin_TikTok_Download_API), `X-Bogus.js`源自该项目
-
 
