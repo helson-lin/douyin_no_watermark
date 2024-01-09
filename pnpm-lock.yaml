@@ -17,9 +17,15 @@ dependencies:
   express:
     specifier: ^4.18.2
     version: 4.18.2
+  marked:
+    specifier: ^11.1.1
+    version: 11.1.1
   node-fetch:
     specifier: '2'
     version: 2.7.0
+  vm:
+    specifier: ^0.1.0
+    version: 0.1.0
 
 devDependencies:
   pkg:
@@ -1028,6 +1034,12 @@ packages:
       semver: 5.7.2
     dev: false
 
+  /marked@11.1.1:
+    resolution: {integrity: sha512-EgxRjgK9axsQuUa/oKMx5DEY8oXpKJfk61rT5iY3aRlgU6QJtUcxU5OAymdhCvWvhYcd9FKmO5eQoX8m9VGJXg==}
+    engines: {node: '>= 18'}
+    hasBin: true
+    dev: false
+
   /media-typer@0.3.0:
     resolution: {integrity: sha512-dq+qelQ9akHpcOl/gUVRTxVIOkAJ1wR3QAvb4RsVjS8oVoFjDGTc679wJYmUmknUF5HwMLOgb5O+a3KxfWapPQ==}
     engines: {node: '>= 0.6'}
@@ -1749,6 +1761,10 @@ packages:
   /vary@1.1.2:
     resolution: {integrity: sha512-BNGbWLfd0eUPabhkXUVm0j8uuvREyTh5ovRa/dyow/BqAbZJyC+5fU+IzQOzmAKzYqYRAISoRhdQr3eIZ/PXqg==}
     engines: {node: '>= 0.8'}
+    dev: false
+
+  /vm@0.1.0:
+    resolution: {integrity: sha512-1aKVjgohVDnVhGrJLhl2k8zIrapH+7HsdnIjGvBp3XX2OCj6XGzsIbDp9rZ3r7t6qgDfXEE1EoEAEOLJm9LKnw==, tarball: https://r2.cnpmjs.org/vm/-/vm-0.1.0.tgz}
     dev: false
 
   /webidl-conversions@3.0.1:

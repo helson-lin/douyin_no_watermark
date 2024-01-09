@@ -1,6 +1,11 @@
 
 const Scraper = require('..')
 const express = require('express')
+const path = require('path')
+const fs = require('fs')
+const vm = require('vm')
+const { marked } = require('marked')
+
 require('dotenv').config();
 const app = express()
 
@@ -10,7 +15,8 @@ const scraper = new Scraper()
 let PORT = process.env.PORT || 3000;
 
 app.get('/', (req, res) => {
-    res.send(`<h1>server is running on: ${PORT}</h1>`)
+    const html = getReadmeContent()
+    res.send(html)
 })
 
 app.post('/douyin', async (req, res) => {
@@ -20,9 +26,9 @@ app.post('/douyin', async (req, res) => {
         const douyinData = await scraper.getDouyinVideoData(douyinId);
         const douyinUrl = await scraper.getDouyinNoWatermarkVideo(douyinData);
         const imgUrl = await scraper.getDouyinImageUrls(douyinData)
-        res.send({code: 0, data: { video: douyinUrl, img: imgUrl } })
+        res.send({ code: 0, data: { video: douyinUrl, img: imgUrl } })
     } catch (e) {
-        res.send({code: 1, msg: String(e), data: null })
+        res.send({ code: 1, msg: String(e), data: null })
     }
 })
 
@@ -34,17 +40,40 @@ app.post('/workflow', async (req, res) => {
             const douyinId = await scraper.getDouyinVideoId(url);
             const douyinData = await scraper.getDouyinVideoData(douyinId);
             const douyinUrl = await scraper.getDouyinNoWatermarkVideo(douyinData);
-            res.send({code: 0, data: [douyinUrl] })
+            res.send({ code: 0, data: [douyinUrl] })
         } else {
             const sec_user_id = await scraper.getUserSecUidByShareUrl(url)
             const result = await scraper.getHomeVideos(sec_user_id)
             const urls = result.map(i => i.url).flat(Infinity)
-            res.send({code: 0, data: urls })
+            res.send({ code: 0, data: urls })
         }
     } catch (e) {
-        res.send({code: 1, msg: String(e), data: null })
+        res.send({ code: 1, msg: String(e), data: null })
     }
 })
+
+const getReadmeContent = () => {
+    const content = fs.readFileSync(path.join(__dirname, '../README.md'), 'utf-8')
+    const htmlContent = marked(content)
+    const htmlWithStyle = `
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Douyin No WaterMark Batch Download</title>
+            <!-- 引入 GitHub Markdown CSS -->
+            <link href="https://cdn.bootcdn.net/ajax/libs/reseter.css/2.0.0/minireseter.css" rel="stylesheet">
+            <link rel="stylesheet" type="text/css" href="https://sindresorhus.com/github-markdown-css/github-markdown.css">
+        </head>
+        <body>
+        <div class="markdown-body">${htmlContent}</div>
+        <style>.markdown-body { padding: 20px 40px; box-sizing: border-box;}</style>
+        </body>
+        </html>
+    `;
+    return htmlWithStyle
+}
 
 const getArgsPort = () => {
     const args = process.argv.slice(2);
