@@ -1,0 +1,7 @@
+FROM ubuntu:18.04
+COPY ./dist/oimi-tk-linux-arm64 /app/
+WORKDIR /app
+CMD chmod +x oimi-tk-linux-arm64
+EXPOSE 3000
+
+ENTRYPOINT ["./oimi-tk-linux-arm64"]

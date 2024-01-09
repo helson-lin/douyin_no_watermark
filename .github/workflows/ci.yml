@@ -42,13 +42,25 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.TOKEN }}
 
+      - name: Extract tag name
+        id: tag_name
+        run: echo "TAG=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
+
       - name: Build Docker image
         uses: docker/build-push-action@v2
         with:
           context: ./
           file: Dockerfile
           push: false
-          tags: h55205l/douyin_no_watermark:latest
+          tags: h55205l/douyin_no_watermark:latest,h55205l/douyin_no_watermark:${{ env.TAG }}
+
+      - name: Build Docker Arm64 image
+        uses: docker/build-push-action@v2
+        with:
+          context: ./
+          file: Dockerfile-arm
+          push: false
+          tags: h55205l/douyin_no_watermark:arm64,h55205l/douyin_no_watermark:arm64-${{ env.TAG }}
 
       - name: Login to Docker Hub
         uses: docker/login-action@v1
@@ -61,4 +73,11 @@ jobs:
         with:
           context: ./
           push: true
-          tags: h55205l/douyin_no_watermark:latest
+          tags: h55205l/douyin_no_watermark:latest,h55205l/douyin_no_watermark:${{ env.TAG }}
+
+      - name: Push Docker Arm64 image
+        uses: docker/build-push-action@v2
+        with:
+          context: ./
+          push: true
+          tags: h55205l/douyin_no_watermark:arm64,h55205l/douyin_no_watermark:arm64-${{ env.TAG }}
