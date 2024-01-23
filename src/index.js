@@ -3,18 +3,18 @@ const Scraper = require('..')
 const express = require('express')
 const path = require('path')
 const fs = require('fs')
-const vm = require('vm')
 const { marked } = require('marked')
-
 require('dotenv').config();
+
 const app = express()
+app.use(express.static(path.join(__dirname, '../public')))
 
 app.use(express.json()); // 用于解析 JSON 格式的请求体
 app.use(express.urlencoded({ extended: true }));
 const scraper = new Scraper()
 let PORT = process.env.PORT || 3000;
 
-app.get('/', (req, res) => {
+app.get('/readme', (req, res) => {
     const html = getReadmeContent()
     res.send(html)
 })
