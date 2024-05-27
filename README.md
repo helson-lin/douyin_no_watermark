@@ -18,8 +18,19 @@
     </a>
 </p>
 
+### Firt you should know
+
+
+if the application have this error information: `FetchError: invalid json response body at https://www.douyin.com/aweme/v1/web/aweme/detail/?device_platform=webapp&aid=6383&channel=channel_pc_web&aweme_id=7366865544722550035&pc_client_type=1&version_code=190500&versio`
+
+please replace the `bin/index.js` 16 line's cookie varible with yours.
+
+you can get the cookie varible from `douyin` website, developer tool's application tab - `cookie` - `sid_guard`
+
+
 
 ### Update Log
+
 
 2024/1/4: ✨ 更新通过用户主页分享链接，批量下载作品
 
