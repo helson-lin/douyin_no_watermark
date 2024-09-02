@@ -28,6 +28,7 @@ app.post('/douyin', async (req, res) => {
         const imgUrl = await scraper.getDouyinImageUrls(douyinData)
         res.send({ code: 0, data: { video: douyinUrl, img: imgUrl } })
     } catch (e) {
+        console.log(e)
         res.send({ code: 1, msg: String(e), data: null })
     }
 })
@@ -48,6 +49,7 @@ app.post('/workflow', async (req, res) => {
             res.send({ code: 0, data: urls })
         }
     } catch (e) {
+        console.log('error', e)
         res.send({ code: 1, msg: String(e), data: null })
     }
 })
