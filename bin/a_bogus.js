@@ -84,10 +84,12 @@ window.screen = {
         onchange:null
     },
 };
-navigator.platform = 'Win32'
+navigator.platform = 'darwin'
 document.body = '<body></body>'
-// proxyObjs = ['window', 'document', 'location', 'navigator', 'history', 'screen']
-// getEnvs(proxyObjs);
+
+/* V 1.0.1.5 */
+
+
 window.bdms || function() {
     var e = {
         312: function(e, r, t) {
@@ -10481,7 +10483,7 @@ window.bdms || function() {
                                 )._v = [s, c, v],
                                 u._u = e,
                                 p[++d] = u,
-                                    window.sign=u
+                                window.sign = u
                             }
                         else if (m < 69)
                             if (m < 67) {
@@ -11031,11 +11033,18 @@ window.bdms || function() {
     window.bdms = n
 }();
 
+
+
+
 function get_result(params, useragent){
     return window.sign(0, 1, 14, params, "", useragent)
 }
 
 
-module.exports = {
-    sign: get_result
-  };
+
+
+const allParams = process.argv.slice(2);
+const params = allParams[0];
+const useragent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Safari/537.36';
+const a_bogus = get_result(atob(params), useragent)
+console.log(a_bogus)

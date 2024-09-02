@@ -1,5 +1,5 @@
 const fetch = require('node-fetch')
-const { sign } = require('./a_bogus')
+const { sign } = require('./sign')
 const download = require('download')
 const getDeepProperty = require("@orange-opensource/get-deep-property");
 class Scraper {
@@ -87,23 +87,33 @@ class Scraper {
      * @param {string} videoId
      * @returns {object}v videoData
      */
-    getDouyinVideoData(videoId) {
+    async getDouyinVideoData(videoId) {
         let apiUrl = `https://www.douyin.com/aweme/v1/web/aweme/detail/?device_platform=webapp&aid=6383&channel=channel_pc_web&aweme_id=${videoId}&pc_client_type=1&version_code=190500&version_name=19.5.0&cookie_enabled=true&screen_width=1344&screen_height=756&browser_language=zh-CN&browser_platform=Win32&browser_name=Firefox&browser_version=110.0&browser_online=true&engine_name=Gecko&engine_version=109.0&os_name=Windows&os_version=10&cpu_core_num=16&device_memory=&platform=PC&webid=7158288523463362079&msToken=abL8SeUTPa9-EToD8qfC7toScSADxpg6yLh2dbNcpWHzE0bT04txM_4UwquIcRvkRb9IU8sifwgM1Kwf1Lsld81o9Irt2_yNyUbbQPSUO8EfVlZJ_78FckDFnwVBVUVK`;
         const urlParser = new URL(apiUrl)
         const query = urlParser.search.replace('?', '')
-        const a_bogus = sign(query, this.headers['User-Agent'])
+        console.log('【parser】query参数：', query, 'User-agent：', this.headers['User-Agent'])
+        const a_bogus = await sign(query, this.headers['User-Agent'])
         console.log('【parser】 生成的a_bogus签名为: ' + a_bogus)
         const new_url = apiUrl + "&a_bogus=" + a_bogus
         console.log('【parser】 正在获取视频数据: \n')
-        return new Promise((resolve, reject) => {
-            fetch(new_url, {
+        try {
+            const res = await fetch(new_url, {
                 headers: this.douyinApiHeaders
-            }).then((res) => res.json())
-                .then(json => {
-                    resolve(json)
-                })
-                .catch(err => reject(err));
-        })
+            })
+            const json = res.json();
+            return json;
+        } catch (e) {
+           throw new Error(e);
+        }
+        // return new Promise((resolve, reject) => {
+        //     fetch(new_url, {
+        //         headers: this.douyinApiHeaders
+        //     }).then((res) => res.json())
+        //         .then(json => {
+        //             resolve(json)
+        //         })
+        //         .catch(err => reject(err));
+        // })
     }
 
     /**
