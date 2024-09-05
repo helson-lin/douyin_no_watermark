@@ -29,9 +29,15 @@ class Scraper {
             'user-agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 10_3_1 like Mac OS X) AppleWebKit/603.1.30 (KHTML, like Gecko) Version/10.0 Mobile/14E304 Safari/602.1',
         }
         return new Promise((resolve, reject) => {
-            fetch(url, headers).then((res) => {
+            fetch(url, {
+                headers,
+                onRedirect (res, nextOptions) {
+                    return nextOptions;
+                }
+            }).then((res) => {
                 if (!res?.url) reject(new Error('can\'t get room id'))
-                const videoId = res?.url?.match(/video\/(\d+)/)[1];
+                // let videoId = res?.url?.match(/video\/(\d+)/)?.[1];
+                const videoId = res?.url?.match(/(slides|video|note)\/(\d+)/)?.[2]; 
                 if (!videoId) reject(new Error('can\'t get videoId, please check your url'))
                 resolve(videoId)
             })

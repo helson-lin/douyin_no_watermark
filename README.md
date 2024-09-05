@@ -1,4 +1,4 @@
-<h2 align="center">douyin_no_watermark是一个抖音视频无水印下载程序</h2>
+<h2 align="center">douyin_no_watermark是一个抖音视频无水印下载程序 【2024/09/05 测试正常】</h2>
 <p align="center">支持Docker、Vercel、私有化服务部署，支持IOS捷径快捷下载</p>
 <p align="center">
     <a href="https://hub.docker.com/r/h55205l/ffandown">
@@ -31,6 +31,7 @@ you can get the cookie varible from `douyin` website, developer tool's applicati
 
 ### Update Log
 
+2024/9/5: 🐛 修复 x_bogus 验证失败，转换为 a_bougs 参数。
 
 2024/1/4: ✨ 更新通过用户主页分享链接，批量下载作品
 
