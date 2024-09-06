@@ -18,14 +18,13 @@
     </a>
 </p>
 
-### Firt you should know
+### 需知
 
+如果程序出现如下类似报错: `FetchError: invalid json response body at https://www.douyin.com/aweme/v1/web/aweme/detail/?device_platform=webapp&aid=6383&channel=channel_pc_web&aweme_id=7366865544722550035&pc_client_type=1&version_code=190500&versio`
 
-if the application have this error information: `FetchError: invalid json response body at https://www.douyin.com/aweme/v1/web/aweme/detail/?device_platform=webapp&aid=6383&channel=channel_pc_web&aweme_id=7366865544722550035&pc_client_type=1&version_code=190500&versio`
+请替换 `bin/index.js` 16 行的cookie变量. cookie 变量的获取，可以在抖音网页版内，打开“开发者工具” - “应用/Application” - “Cookie”.
 
-please replace the `bin/index.js` 16 line's cookie varible with yours.
-
-you can get the cookie varible from `douyin` website, developer tool's application tab - `cookie` - `sid_guard`
+![111725585960_ pic](https://github.com/user-attachments/assets/a4c63bfc-5d4f-4e05-8e80-0706cdd323c6)
 
 
 
