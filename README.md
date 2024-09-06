@@ -72,7 +72,7 @@ PORT = 11233
 
 #### Docker部署
 
-1. 拉取镜像: `docker push h55205l/douyin_no_watermark:latest`,目前没有构建`arm`版本
+1. 拉取镜像: `docker pull h55205l/douyin_no_watermark:latest`,目前没有构建`arm`版本
 2. 运行服务：`docker run -p 3311:3000 -d h55205l/douyin_no_watermark:latest`
 
 内置默认端口为`3000`, 映射端口自行修改
