@@ -132,8 +132,11 @@ class Scraper {
         const isImagesShare = [2, 42].includes(videoData.aweme_detail.media_type)
         if (!isImagesShare) {
             const url = videoData.aweme_detail.video.play_addr.url_list[0];
-            const key = videoData.aweme_detail.video.play_addr.uri.replace('video/', '');
-            const noWatermarkUrl = url.replace('/play/', '/playwm/') + '?video_id=' + key;
+            // console.log('url:', url)
+            // 针对部分视频进行处理，不是所有的都需要
+            // const key = videoData.aweme_detail.video.play_addr.uri.replace('video/', '');
+            // const noWatermarkUrl = url.replace('/play/', '/playwm/') + '?video_id=' + key;
+            const noWatermarkUrl = url.replace('/play/', '/playwm/');
             if (noWatermarkUrl) {
                 noWatermarkUrls = [noWatermarkUrl]
             }
