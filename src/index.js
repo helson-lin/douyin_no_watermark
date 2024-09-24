@@ -41,7 +41,7 @@ app.post('/workflow', async (req, res) => {
             const douyinId = await scraper.getDouyinVideoId(url);
             const douyinData = await scraper.getDouyinVideoData(douyinId);
             const douyinUrl = await scraper.getDouyinNoWatermarkVideo(douyinData);
-            res.send({ code: 0, data: [douyinUrl] })
+            res.send({ code: 0, data: Array.isArray(douyinUrl) ? douyinUrl : [] })
         } else {
             const sec_user_id = await scraper.getUserSecUidByShareUrl(url)
             const result = await scraper.getHomeVideos(sec_user_id)
