@@ -1,5 +1,7 @@
 <h2 align="center">douyin_no_watermark是一个抖音视频无水印下载程序 【2024/09/24 测试正常】</h2>
 <p align="center">支持Docker、Vercel、私有化服务部署，支持IOS捷径快捷下载</p>
+<p align="center">免责声明：使用本项目所产生的所有风险由用户自行承担。我们不对因使用本项目而导致的任何直接、间接、偶然、特殊或后果性的损害负责，包括但不限于利润损失、数据丢失或其他经济损失。
+责任限制：在适用法律允许的最大范围内，项目作者及贡献者对因使用或无法使用本项目而导致的任何损失不承担责任。</p>
 <p align="center">
     <a href="https://hub.docker.com/r/h55205l/ffandown">
         <img alt="docker image size" src="https://img.shields.io/docker/image-size/h55205l/douyin_no_watermark"/>
@@ -98,9 +100,19 @@ PORT = 11233
 
 推荐使用个人服务器部署，`vercel`部署批量下载或出现超时（单个作品下载不会），请谨记(付费版本除外)。
 
+### 免责声明
+
+使用本项目所产生的所有风险由用户自行承担。我们不对因使用本项目而导致的任何直接、间接、偶然、特殊或后果性的损害负责，包括但不限于利润损失、数据丢失或其他经济损失。
+责任限制：在适用法律允许的最大范围内，项目作者及贡献者对因使用或无法使用本项目而导致的任何损失不承担责任。
 
 
-### PS
+## License
 
-本项目思路参考： [Doouyin_TikTOk_Download_API](https://github.com/Evil0ctal/Douyin_TikTok_Download_API), `X-Bogus.js`源自该项目 X-bougus已失效，切换为 a-bogus.
+This project is licensed under the Creative Commons Attribution-NonCommercial 4.0 International Public License. See the [LICENSE](./LICENSE) file for details.
+
+
+## 致谢
+
+
+ `X-Bogus.js`： [Doouyin_TikTOk_Download_API](https://github.com/Evil0ctal/Douyin_TikTok_Download_API), `X-Bogus.js`
 
