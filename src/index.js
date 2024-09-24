@@ -14,6 +14,7 @@ app.use(express.urlencoded({ extended: true }));
 const scraper = new Scraper()
 let PORT = process.env.PORT || 3000;
 
+// readme docs
 app.get('/readme', (req, res) => {
     const html = getReadmeContent()
     res.send(html)
@@ -24,11 +25,11 @@ app.post('/douyin', async (req, res) => {
     try {
         const douyinId = await scraper.getDouyinVideoId(url);
         const douyinData = await scraper.getDouyinVideoData(douyinId);
-        const douyinUrl = await scraper.getDouyinNoWatermarkVideo(douyinData);
+        const douyinUrls = await scraper.getDouyinNoWatermarkVideo(douyinData);
         const imgUrl = await scraper.getDouyinImageUrls(douyinData)
-        res.send({ code: 0, data: { video: douyinUrl, img: imgUrl } })
+        res.send({ code: 0, data: { video: douyinUrls, img: imgUrl } })
     } catch (e) {
-        console.log(e)
+        console.log('error', e)
         res.send({ code: 1, msg: String(e), data: null })
     }
 })
@@ -40,8 +41,8 @@ app.post('/workflow', async (req, res) => {
         if (!isHomeUrl) {
             const douyinId = await scraper.getDouyinVideoId(url);
             const douyinData = await scraper.getDouyinVideoData(douyinId);
-            const douyinUrl = await scraper.getDouyinNoWatermarkVideo(douyinData);
-            res.send({ code: 0, data: Array.isArray(douyinUrl) ? douyinUrl : [] })
+            const douyinUrls = await scraper.getDouyinNoWatermarkVideo(douyinData);
+            res.send({ code: 0, data: douyinUrls })
         } else {
             const sec_user_id = await scraper.getUserSecUidByShareUrl(url)
             const result = await scraper.getHomeVideos(sec_user_id)
@@ -92,5 +93,5 @@ const getArgsPort = () => {
 
 PORT = getArgsPort()
 app.listen(PORT, () => {
-    console.log(`server is running on: ${PORT}`);
+    console.log(`server is running on: ${PORT} \n`);
 })

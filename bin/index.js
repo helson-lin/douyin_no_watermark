@@ -128,22 +128,25 @@ class Scraper {
      * @returns {string}
      */
     async getDouyinNoWatermarkVideo(videoData) {
-        let noWatermarkUrl;
-        const isFyp = videoData.aweme_detail.media_type === 2
-        if (!isFyp) {
-            let url = videoData.aweme_detail.video.play_addr.url_list[0];
-            let key = videoData.aweme_detail.video.play_addr.uri.replace('video/', '');
-            noWatermarkUrl = url.replace('/play/', '/playwm/') + '?video_id=' + key;
+        let noWatermarkUrls = [];
+        const isImagesShare = [2, 42].includes(videoData.aweme_detail.media_type)
+        if (!isImagesShare) {
+            const url = videoData.aweme_detail.video.play_addr.url_list[0];
+            const key = videoData.aweme_detail.video.play_addr.uri.replace('video/', '');
+            const noWatermarkUrl = url.replace('/play/', '/playwm/') + '?video_id=' + key;
+            if (noWatermarkUrl) {
+                noWatermarkUrls = [noWatermarkUrl]
+            }
         } else {
             // 图片分享
             let images = videoData?.aweme_detail?.images
-            noWatermarkUrl = images.map(i => {
+            noWatermarkUrls = images.map(i => {
                 if (!i?.url_list) return null
                 const maxSizePicIndex = i?.url_list.length - 1
                 return i?.url_list[maxSizePicIndex]
             }).filter(i => i)
         }
-        return noWatermarkUrl;
+        return noWatermarkUrls;
     }
 
     /**
