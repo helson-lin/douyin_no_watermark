@@ -22,13 +22,13 @@
       "public/*"
     ],
     "targets": [
-      "node14-macos-arm64",
-      "node14-macos-x64",
-      "node14-windows-x64",
-      "node14-linux-x64",
-      "node14-linux-arm64",
-      "node14-alpine-x64",
-      "node14-alpine-arm64"
+      "node18-macos-arm64",
+      "node18-macos-x64",
+      "node18-windows-x64",
+      "node18-linux-x64",
+      "node18-linux-arm64",
+      "node18-alpine-x64",
+      "node18-alpine-arm64"
     ],
     "outputPath": "dist"
   },
