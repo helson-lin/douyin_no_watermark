@@ -92,7 +92,7 @@ PORT = 11233
 
 
 
-**捷径下载**: [[iCloud]([https://www.icloud.com/shortcuts/f42fea0e6fd14dcbae62921b8b758c7d](https://www.icloud.com/shortcuts/58969bbfa6ae405ba9358d60590e3f9c))](https://www.icloud.com/shortcuts/163f1f35153c4c37a41b4f12c32288d1)
+**捷径下载**: [iCloud](https://www.icloud.com/shortcuts/58969bbfa6ae405ba9358d60590e3f9c)
 
 捷径内服务器，仅供测试使用。如果有大量使用需求，请自行部署。
 
