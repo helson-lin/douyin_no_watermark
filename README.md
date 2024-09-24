@@ -1,4 +1,4 @@
-<h2 align="center">douyin_no_watermark是一个抖音视频无水印下载程序 【2024/09/05 测试正常】</h2>
+<h2 align="center">douyin_no_watermark是一个抖音视频无水印下载程序 【2024/09/24 测试正常】</h2>
 <p align="center">支持Docker、Vercel、私有化服务部署，支持IOS捷径快捷下载</p>
 <p align="center">
     <a href="https://hub.docker.com/r/h55205l/ffandown">
@@ -26,6 +26,9 @@
 
 ![111725585960_ pic](https://github.com/user-attachments/assets/a4c63bfc-5d4f-4e05-8e80-0706cdd323c6)
 
+#### 如直接使用解析之后的地址下载出现 403 forbidden
+
+请在请求下载的时候添加`Referer`请求头，值为`url`的值
 
 
 ### Update Log
@@ -89,7 +92,7 @@ PORT = 11233
 
 
 
-**捷径下载**: [[iCloud](https://www.icloud.com/shortcuts/f42fea0e6fd14dcbae62921b8b758c7d)](https://www.icloud.com/shortcuts/163f1f35153c4c37a41b4f12c32288d1)
+**捷径下载**: [[iCloud]([https://www.icloud.com/shortcuts/f42fea0e6fd14dcbae62921b8b758c7d](https://www.icloud.com/shortcuts/58969bbfa6ae405ba9358d60590e3f9c))](https://www.icloud.com/shortcuts/163f1f35153c4c37a41b4f12c32288d1)
 
 捷径内服务器，仅供测试使用。如果有大量使用需求，请自行部署。
 
@@ -99,5 +102,5 @@ PORT = 11233
 
 ### PS
 
-本项目思路参考： [Doouyin_TikTOk_Download_API](https://github.com/Evil0ctal/Douyin_TikTok_Download_API), `X-Bogus.js`源自该项目
+本项目思路参考： [Doouyin_TikTOk_Download_API](https://github.com/Evil0ctal/Douyin_TikTok_Download_API), `X-Bogus.js`源自该项目 X-bougus已失效，切换为 a-bogus.
 
